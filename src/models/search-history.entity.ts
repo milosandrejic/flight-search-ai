@@ -18,7 +18,7 @@ export class SearchHistory {
    * User identifier (optional, for personalized history)
    */
   @Index()
-  @Column({ type: 'uuid', nullable: true })
+  @Column({ type: 'uuid', nullable: true, name: 'user_id' })
   userId?: string;
 
   /**
@@ -44,31 +44,31 @@ export class SearchHistory {
   /**
    * Departure date
    */
-  @Column({ type: 'date' })
+  @Column({ type: 'date', name: 'departure_date' })
   departureDate!: Date;
 
   /**
    * Return date (nullable for one-way)
    */
-  @Column({ type: 'date', nullable: true })
+  @Column({ type: 'date', nullable: true, name: 'return_date' })
   returnDate?: Date;
 
   /**
    * Number of results returned
    */
-  @Column({ type: 'int' })
+  @Column({ type: 'int', name: 'results_count' })
   resultsCount!: number;
 
   /**
    * Search time in milliseconds
    */
-  @Column({ type: 'int' })
+  @Column({ type: 'int', name: 'search_time_ms' })
   searchTimeMs!: number;
 
   /**
    * Cabin class searched
    */
-  @Column({ type: 'varchar', length: 50 })
+  @Column({ type: 'varchar', length: 50, name: 'cabin_class' })
   cabinClass!: string;
 
   /**
@@ -77,7 +77,7 @@ export class SearchHistory {
   @Column({ type: 'int', default: 1 })
   passengers!: number;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'created_at' })
   @Index()
   createdAt!: Date;
 }

@@ -3,6 +3,7 @@ import { PinoLogger } from 'nestjs-pino';
 import { ChatRequest } from 'src/types/chat-request';
 import { ChatResponse } from 'src/types/chat-response';
 import { SearchHistoryRepository } from 'src/repositories/search-history.repository';
+import { FlightQueryParser } from 'src/repositories/flight-query-parser';
 import { randomUUID } from 'crypto';
 
 /**
@@ -13,6 +14,7 @@ export class ChatController {
   constructor(
     private readonly logger: PinoLogger,
     private readonly searchHistoryRepo: SearchHistoryRepository,
+    private readonly queryParser: FlightQueryParser,
   ) {
     this.logger.setContext(ChatController.name);
   }
@@ -39,23 +41,16 @@ export class ChatController {
     );
 
     try {
-      // TODO Phase 2: Parse natural language query using OpenAI
-      // const parsedQuery = await this.aiService.parseFlightQuery(request.query);
+      // Parse natural language query using OpenAI
+      const parsedQuery = await this.queryParser.parse(request.query);
+
+      console.log(parsedQuery);
 
       // TODO Phase 3: Search flights using Duffel API
       // const results = await this.flightService.search(parsedQuery);
 
       // Mock response for now
       const searchTime = Date.now() - startTime;
-
-      const parsedQuery = {
-        origin: 'JFK',
-        destination: 'LHR',
-        departureDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
-        returnDate: undefined as string | undefined,
-        passengers: { adults: 1, children: 0, infants: 0 },
-        cabinClass: 'economy' as const,
-      };
 
       const response: ChatResponse = {
         parsedQuery,

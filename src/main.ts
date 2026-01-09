@@ -1,8 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from 'src/app.module';
 import { ValidationPipe } from '@nestjs/common';
-import { Logger, PinoLogger } from 'nestjs-pino';
-import { GlobalExceptionFilter } from 'src/common/filters/global-exception.filter';
+import { Logger } from 'nestjs-pino';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
@@ -10,10 +9,6 @@ async function bootstrap() {
   // Use Pino logger
   const logger = app.get(Logger);
   app.useLogger(logger);
-
-  // Enable global exception filter
-  const pinoLogger = app.get(PinoLogger);
-  app.useGlobalFilters(new GlobalExceptionFilter(pinoLogger));
 
   // Enable validation globally
   app.useGlobalPipes(

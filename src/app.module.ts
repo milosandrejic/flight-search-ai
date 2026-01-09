@@ -2,12 +2,16 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from 'nestjs-pino';
+import { APP_FILTER } from '@nestjs/core';
 import { AppController } from 'src/app.controller';
 import { AppService } from 'src/app.service';
 import { ChatController } from 'src/controllers/chat.controller';
 import { SearchHistoryController } from 'src/controllers/search-history.controller';
 import { SearchHistoryRepository } from 'src/repositories/search-history.repository';
+import { OpenAiRepository } from 'src/repositories/openai.repository';
+import { FlightQueryParser } from 'src/repositories/flight-query-parser';
 import { SearchHistory } from 'src/models/search-history.entity';
+import { GlobalExceptionFilter } from 'src/common/filters/global-exception.filter';
 
 @Module({
   imports: [
@@ -66,6 +70,15 @@ import { SearchHistory } from 'src/models/search-history.entity';
     TypeOrmModule.forFeature([SearchHistory]),
   ],
   controllers: [AppController, ChatController, SearchHistoryController],
-  providers: [AppService, SearchHistoryRepository],
+  providers: [
+    AppService,
+    SearchHistoryRepository,
+    OpenAiRepository,
+    FlightQueryParser,
+    {
+      provide: APP_FILTER,
+      useClass: GlobalExceptionFilter,
+    },
+  ],
 })
 export class AppModule {}
