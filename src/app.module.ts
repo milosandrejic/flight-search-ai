@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { LoggerModule } from 'nestjs-pino';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -9,6 +10,39 @@ import { AppService } from './app.service';
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
+    }),
+    LoggerModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        pinoHttp: {
+          level: configService.get('LOG_LEVEL', 'info'),
+          transport:
+            configService.get('NODE_ENV') === 'development'
+              ? {
+                target: 'pino-pretty',
+                options: {
+                  colorize: true,
+                  translateTime: 'SYS:standard',
+                  ignore: 'pid,hostname',
+                  singleLine: false,
+                },
+              }
+              : undefined,
+          serializers: {
+            req: (req) => ({
+              method: req.method,
+              url: req.url,
+            }),
+            res: (res) => ({
+              statusCode: res.statusCode,
+            }),
+          },
+          customProps: () => ({
+            service: 'flight-search-mcp',
+          }),
+        },
+      }),
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],

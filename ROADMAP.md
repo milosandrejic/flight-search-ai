@@ -1,7 +1,8 @@
-# Flight Search MCP - Feature Roadmap
+# Flight Search - Feature Roadmap
 
 ## Project Overview
-MCP-compatible flight search backend using NestJS + PostgreSQL + Duffel API + OpenAI.
+Conversational flight search backend using NestJS + PostgreSQL + Duffel API + OpenAI.
+Powers a chat-based frontend where users search flights using natural language.
 
 ---
 
@@ -10,41 +11,44 @@ MCP-compatible flight search backend using NestJS + PostgreSQL + Duffel API + Op
 ### 1.1 Project Setup
 - [x] Initialize NestJS project structure
 - [x] Configure TypeScript (strict mode)
-- [ ] Set up PostgreSQL connection (TypeORM/Prisma)
+- [x] Set up PostgreSQL connection (TypeORM)
 - [x] Environment configuration (.env management)
-- [ ] Logging infrastructure (Winston/Pino)
+- [x] Docker setup (dev + prod)
+- [x] Logging infrastructure (Pino)
 - [ ] Error handling middleware
 
 **Dependencies:**
 - [x] `@nestjs/core`, `@nestjs/common`, `@nestjs/config`
 - [x] `class-validator`, `class-transformer`
 - [x] ESLint with `@stylistic/eslint-plugin`
-- [ ] `@nestjs/typeorm` or `@prisma/client`
-- [ ] `winston` or `pino`
+- [x] `@nestjs/typeorm`, `typeorm`, `pg`
+- [x] `nestjs-pino`, `pino-http`, `pino-pretty`
 
 **Deliverables:**
 - [x] Working NestJS app skeleton
-- [ ] Database connection established
-- [ ] Structured logging in place
+- [x] Database connection established
+- [x] Docker Compose setup (dev + prod)
+- [x] Migration system configured
+- [x] Structured logging in place
 
 ---
 
-### 1.2 MCP Server Implementation
-- [x] Input validation framework (.0 over stdio)
-- [ ] Tool registration system
-- [ ] Input validation framework (Zod/class-validator)
-- [ ] Response formatter (enforce strict JSON)
-- [ ] Error code mapping (MCP error codes)
+### 1.2 Chat API Implementation
+- [ ] Chat endpoint (POST /chat)
+- [ ] Conversation context management
+- [x] Input validation framework (class-validator)
+- [x] Response formatter (enforce strict JSON)
+- [ ] Error handling middleware
 
-**MCP Methods to Implement:**
-- `initialize` - handshake with client
-- `tools/list` - return available tools
-- `tools/call` - execute tool by name
+**API Endpoints to Implement:**
+- [ ] `POST /chat` - natural language flight search
+- [ ] `GET /conversations/:id` - retrieve conversation history
+- [ ] `GET /searches` - list popular searches
 
 **Deliverables:**
-- MCP server listening on stdio
-- Tool registry working
-- Validated with MCP Inspector
+- [ ] Chat endpoint accepting natural language
+- [ ] Conversation state management
+- [ ] Frontend-ready API responses
 
 ---
 
@@ -272,7 +276,9 @@ interface FlightProvider {
 
 **Tasks:**
 - [x] Create flight_searches table migration
+- [x] Run migration (table created)
 - [ ] Add retention policy (90 days)
+- [ ] Create entity class for TypeORM
 
 ---
 
@@ -338,8 +344,14 @@ interface FlightProvider {
 - [x] TypeScript strict mode configured
 - [x] ESLint with stylistic plugin configured
 - [x] Environment configuration ready
-- [ ] Phase 1: Foundation (in progress - 50%)
-- [ ] Phase 2: AI Integration
-- [ ] Phase 3: Flight Search
+- [x] PostgreSQL + TypeORM integrated
+- [x] Database migrations system configured
+- [x] flight_searches table created
+- [x] Docker Compose setup (dev + prod)
+- [x] Pino structured logging configured
+- [x] Phase 1.1: Project Setup (complete)
+- [ ] Phase 1.2: Chat API Implementation (next)
+- [ ] Phase 2: AI Integration (OpenAI natural language parsing)
+- [ ] Phase 3: Flight Search (Duffel API)
 - [ ] Phase 4: Ranking
 - [ ] Phase 5: Production Readiness

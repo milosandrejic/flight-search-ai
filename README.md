@@ -1,10 +1,14 @@
 # flight-search-mcp
 
-Flight Search MCP server - A Model Context Protocol server for intelligent flight search using NestJS, Duffel API, and OpenAI.
+Intelligent flight search backend with conversational AI - Search for flights using natural language via a chat interface.
 
 ## About
 
-This project implements an [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server that enables AI assistants to search for flights using natural language queries.
+This project provides a NestJS backend that:
+- Parses natural language flight queries using OpenAI
+- Searches flights via Duffel API
+- Maintains conversation context for refinement
+- Powers a chat-based flight search frontend
 
 ## Quick Start with Docker
 
