@@ -8,27 +8,29 @@ MCP-compatible flight search backend using NestJS + PostgreSQL + Duffel API + Op
 ## Phase 1: Foundation & Core Infrastructure
 
 ### 1.1 Project Setup
-- [ ] Initialize NestJS project structure
-- [ ] Configure TypeScript (strict mode)
+- [x] Initialize NestJS project structure
+- [x] Configure TypeScript (strict mode)
 - [ ] Set up PostgreSQL connection (TypeORM/Prisma)
-- [ ] Environment configuration (.env management)
+- [x] Environment configuration (.env management)
 - [ ] Logging infrastructure (Winston/Pino)
 - [ ] Error handling middleware
 
 **Dependencies:**
-- `@nestjs/core`, `@nestjs/common`, `@nestjs/config`
-- `@nestjs/typeorm` or `@prisma/client`
-- `winston` or `pino`
+- [x] `@nestjs/core`, `@nestjs/common`, `@nestjs/config`
+- [x] `class-validator`, `class-transformer`
+- [x] ESLint with `@stylistic/eslint-plugin`
+- [ ] `@nestjs/typeorm` or `@prisma/client`
+- [ ] `winston` or `pino`
 
 **Deliverables:**
-- Working NestJS app skeleton
-- Database connection established
-- Structured logging in place
+- [x] Working NestJS app skeleton
+- [ ] Database connection established
+- [ ] Structured logging in place
 
 ---
 
 ### 1.2 MCP Server Implementation
-- [ ] MCP protocol handler (JSON-RPC 2.0 over stdio)
+- [x] Input validation framework (.0 over stdio)
 - [ ] Tool registration system
 - [ ] Input validation framework (Zod/class-validator)
 - [ ] Response formatter (enforce strict JSON)
@@ -258,37 +260,19 @@ interface FlightProvider {
 ### 5.2 Database Schema
 **Tables:**
 
-1. `tool_calls`
-   - id (UUID)
-   - tool_name (string)
-   - input_hash (string) - hash of input params
-   - success (boolean)
-   - latency_ms (integer)
-   - created_at (timestamp)
-
-2. `flight_searches`
+1. `flight_searches` (already created)
    - id (UUID)
    - origin (string)
    - destination (string)
    - departure_date (date)
+   - return_date (date, nullable)
    - results_count (integer)
    - search_time_ms (integer)
    - created_at (timestamp)
 
-3. `api_calls`
-   - id (UUID)
-   - provider (string) - "duffel" | "openai"
-   - endpoint (string)
-   - latency_ms (integer)
-   - status_code (integer)
-   - cost_usd (decimal)
-   - created_at (timestamp)
-
 **Tasks:**
-- [ ] Create migration scripts
-- [ ] Implement audit logging
-- [ ] Add indexes on frequently queried fields
-- [ ] Set up retention policy (30-90 days)
+- [x] Create flight_searches table migration
+- [ ] Add retention policy (90 days)
 
 ---
 
@@ -350,7 +334,11 @@ interface FlightProvider {
 
 ## Current Status
 - [x] Project initialization
-- [ ] Phase 1: Foundation
+- [x] NestJS app running with health check endpoint
+- [x] TypeScript strict mode configured
+- [x] ESLint with stylistic plugin configured
+- [x] Environment configuration ready
+- [ ] Phase 1: Foundation (in progress - 50%)
 - [ ] Phase 2: AI Integration
 - [ ] Phase 3: Flight Search
 - [ ] Phase 4: Ranking
