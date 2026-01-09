@@ -34,33 +34,33 @@ Powers a chat-based frontend where users search flights using natural language.
 ---
 
 ### 1.2 Chat API Implementation
-- [ ] Chat endpoint (POST /chat)
-- [ ] Conversation context management
+- [x] Chat endpoint (POST /chat)
+- [x] Conversation context management
 - [x] Input validation framework (class-validator)
 - [x] Response formatter (enforce strict JSON)
 - [x] Error handling middleware
 
 **API Endpoints to Implement:**
-- [ ] `POST /chat` - natural language flight search
-- [ ] `GET /conversations/:id` - retrieve conversation history
-- [ ] `GET /searches` - list popular searches
+- [x] `POST /chat` - natural language flight search
+- [x] `GET /searches/history` - retrieve search history
+- [x] `GET /searches/popular` - list popular searches
 
 **Deliverables:**
-- [ ] Chat endpoint accepting natural language
-- [ ] Conversation state management
-- [ ] Frontend-ready API responses
+- [x] Chat endpoint accepting natural language
+- [x] Search history tracking (stateless)
+- [x] Frontend-ready API responses
 
 ---
 
 ## Phase 2: AI Natural Language Processing
 
 ### 2.1 OpenAI Integration
-- [ ] OpenAI client wrapper
-- [ ] Prompt engineering for flight query parsing
-- [ ] Response schema enforcement (JSON mode)
-- [ ] Token usage tracking
-- [ ] Cost estimation per request
-- [ ] Retry logic with exponential backoff
+- [x] OpenAI client wrapper
+- [x] Prompt engineering for flight query parsing
+- [x] Response schema enforcement (JSON mode)
+- [x] Token usage tracking
+- [x] Cost estimation per request
+- [x] Retry logic with exponential backoff
 
 **Tool:** `parse_flight_query`
 
@@ -93,22 +93,22 @@ Powers a chat-based frontend where users search flights using natural language.
 ```
 
 **Tasks:**
-- [ ] Create OpenAI service module
-- [ ] Define prompt template for flight extraction
-- [ ] Validate IATA codes from LLM output
-- [ ] Handle ambiguous queries gracefully
-- [ ] Log all AI interactions (no PII)
+- [x] Create OpenAI service module
+- [x] Define prompt template for flight extraction
+- [x] Validate IATA codes from LLM output
+- [x] Handle ambiguous queries gracefully
+- [x] Log all AI interactions (no PII)
 
 ---
 
 ## Phase 3: Flight Search via Duffel API
 
 ### 3.1 Duffel Provider Abstraction
-- [ ] Create FlightProvider interface
-- [ ] Implement DuffelProvider (wraps Duffel API)
-- [ ] HTTP client with retry logic
-- [ ] Rate limit handling
-- [ ] Response normalization to internal format
+- [x] Create FlightProvider interface
+- [x] Implement DuffelProvider (wraps Duffel API)
+- [x] HTTP client with retry logic
+- [x] Rate limit handling
+- [x] Response normalization to internal format
 
 **Interface:**
 ```typescript
@@ -119,10 +119,10 @@ interface FlightProvider {
 ```
 
 **Tasks:**
-- [ ] Duffel API authentication
-- [ ] Offer search endpoint integration
-- [ ] Map Duffel response to internal Flight model
-- [ ] Handle API errors (quota, timeouts, invalid requests)
+- [x] Duffel API authentication
+- [x] Offer search endpoint integration
+- [x] Map Duffel response to internal Flight model
+- [x] Handle API errors (quota, timeouts, invalid requests)
 - [ ] Cache frequent searches (Redis/in-memory)
 
 ---
@@ -184,11 +184,11 @@ interface FlightProvider {
 ```
 
 **Tasks:**
-- [ ] Implement search_flights tool handler
-- [ ] Validate all inputs before Duffel call
-- [ ] Transform Duffel offers to normalized format
-- [ ] Sort results (default: by price)
-- [ ] Limit results (max 20-50)
+- [x] Implement search_flights tool handler
+- [x] Validate all inputs before Duffel call
+- [x] Transform Duffel offers to normalized format
+- [x] Sort results (default: by price)
+- [x] Limit results (max 20-50)
 
 ---
 
