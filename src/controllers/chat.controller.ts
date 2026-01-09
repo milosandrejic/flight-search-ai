@@ -4,6 +4,7 @@ import { ChatRequest } from 'src/types/chat-request';
 import { ChatResponse } from 'src/types/chat-response';
 import { SearchHistoryRepository } from 'src/repositories/search-history.repository';
 import { FlightQueryParser } from 'src/repositories/flight-query-parser';
+import { DuffelRepository } from 'src/repositories/duffel.repository';
 import { randomUUID } from 'crypto';
 
 /**
@@ -15,6 +16,7 @@ export class ChatController {
     private readonly logger: PinoLogger,
     private readonly searchHistoryRepo: SearchHistoryRepository,
     private readonly queryParser: FlightQueryParser,
+    private readonly duffelRepo: DuffelRepository,
   ) {
     this.logger.setContext(ChatController.name);
   }
@@ -44,20 +46,17 @@ export class ChatController {
       // Parse natural language query using OpenAI
       const parsedQuery = await this.queryParser.parse(request.query);
 
-      console.log(parsedQuery);
+      // Search flights using Duffel API
+      const results = await this.duffelRepo.searchFlights(parsedQuery);
 
-      // TODO Phase 3: Search flights using Duffel API
-      // const results = await this.flightService.search(parsedQuery);
-
-      // Mock response for now
       const searchTime = Date.now() - startTime;
 
       const response: ChatResponse = {
         parsedQuery,
-        results: [],
+        results,
         metadata: {
           searchId,
-          resultsCount: 0,
+          resultsCount: results.length,
           searchTime,
           timestamp: new Date().toISOString(),
         },

@@ -10,6 +10,7 @@ import { SearchHistoryController } from 'src/controllers/search-history.controll
 import { SearchHistoryRepository } from 'src/repositories/search-history.repository';
 import { OpenAiRepository } from 'src/repositories/openai.repository';
 import { FlightQueryParser } from 'src/repositories/flight-query-parser';
+import { DuffelRepository } from 'src/repositories/duffel.repository';
 import { SearchHistory } from 'src/models/search-history.entity';
 import { GlobalExceptionFilter } from 'src/common/filters/global-exception.filter';
 
@@ -74,6 +75,7 @@ import { GlobalExceptionFilter } from 'src/common/filters/global-exception.filte
     AppService,
     SearchHistoryRepository,
     OpenAiRepository,
+    DuffelRepository,
     FlightQueryParser,
     {
       provide: APP_FILTER,
