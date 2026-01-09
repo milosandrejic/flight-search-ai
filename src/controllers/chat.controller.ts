@@ -1,4 +1,5 @@
 import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { PinoLogger } from 'nestjs-pino';
 import { ChatRequest } from 'src/types/chat-request';
 import { ChatResponse } from 'src/types/chat-response';
@@ -10,6 +11,7 @@ import { randomUUID } from 'crypto';
 /**
  * Chat controller - handles flight search via natural language
  */
+@ApiTags('chat')
 @Controller('chat')
 export class ChatController {
   constructor(
@@ -23,12 +25,29 @@ export class ChatController {
 
   /**
    * Process natural language flight search query
-   * 1. Parse query with AI (TODO Phase 2)
-   * 2. Search flights (TODO Phase 3)
+   * 1. Parse query with AI
+   * 2. Search flights via Duffel API
    * 3. Save to history
    */
   @Post()
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Search flights using natural language',
+    description: 'Converts natural language query into structured flight search parameters and returns matching flights from Duffel API',
+  })
+  @ApiBody({ type: ChatRequest })
+  @ApiResponse({
+    status: 200,
+    description: 'Flight search completed successfully',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Invalid request or malformed query',
+  })
+  @ApiResponse({
+    status: 500,
+    description: 'Internal server error or external API failure',
+  })
   async chat(@Body() request: ChatRequest): Promise<ChatResponse> {
     const startTime = Date.now();
     const searchId = randomUUID();

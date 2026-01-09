@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PinoLogger } from 'nestjs-pino';
 import { Duffel } from '@duffel/api';
-import type { CreateOfferRequestPassenger, CreateOfferRequestSlice } from '@duffel/api/types';
+import type { CreateOfferRequestPassenger, CreateOfferRequestSlice, OfferSliceSegment } from '@duffel/api/types';
 import { ParsedFlightQuery, FlightResult } from 'src/types/chat-response';
 import { ExternalApiException } from 'src/common/exceptions';
 
@@ -111,25 +111,14 @@ export class DuffelRepository {
 
       const latency = Date.now() - startTime;
 
-      // Transform offers to internal format
+      // Transform offers to internal format - return full Duffel segments
       const results: FlightResult[] = offersResponse.data.slice(0, 20).map((offer) => ({
         id: offer.id,
         price: {
           amount: parseFloat(offer.total_amount),
           currency: offer.total_currency,
         },
-        segments: offer.slices.flatMap((slice) =>
-          slice.segments.map((segment) => ({
-            origin: segment.origin?.iata_code ?? 'Unknown',
-            destination: segment.destination?.iata_code ?? 'Unknown',
-            departure: segment.departing_at,
-            arrival: segment.arriving_at,
-            duration: segment.duration ? parseInt(segment.duration.replace(/[^\d]/g, '')) || 0 : 0,
-            carrier: segment.marketing_carrier?.iata_code ?? 'Unknown',
-            flightNumber: segment.marketing_carrier_flight_number,
-            aircraft: segment.aircraft?.name ?? 'Unknown',
-          })),
-        ),
+        segments: offer.slices.flatMap((slice) => slice.segments as OfferSliceSegment[]),
         totalDuration: offer.slices.reduce(
           (total: number, slice) => total + (slice.duration ? parseInt(slice.duration.replace(/[^\d]/g, '')) || 0 : 0),
           0,

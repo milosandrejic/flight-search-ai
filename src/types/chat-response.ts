@@ -1,3 +1,5 @@
+import type { OfferSliceSegment } from '@duffel/api/types';
+
 /**
  * Flight search result from Duffel
  */
@@ -7,21 +9,12 @@ export interface FlightResult {
     amount: number;
     currency: string;
   };
-  segments: FlightSegment[];
+  segments: OfferSliceSegment[];
   totalDuration: number;
   stops: number;
 }
 
-export interface FlightSegment {
-  origin: string;
-  destination: string;
-  departure: string;
-  arrival: string;
-  duration: number;
-  carrier: string;
-  flightNumber: string;
-  aircraft: string;
-}
+export type FlightSegment = OfferSliceSegment;
 
 /**
  * Parsed flight search parameters from AI
