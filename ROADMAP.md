@@ -15,7 +15,7 @@ Powers a chat-based frontend where users search flights using natural language.
 - [x] Environment configuration (.env management)
 - [x] Docker setup (dev + prod)
 - [x] Logging infrastructure (Pino)
-- [ ] Error handling middleware
+- [x] Error handling middleware
 
 **Dependencies:**
 - [x] `@nestjs/core`, `@nestjs/common`, `@nestjs/config`
@@ -38,7 +38,7 @@ Powers a chat-based frontend where users search flights using natural language.
 - [ ] Conversation context management
 - [x] Input validation framework (class-validator)
 - [x] Response formatter (enforce strict JSON)
-- [ ] Error handling middleware
+- [x] Error handling middleware
 
 **API Endpoints to Implement:**
 - [ ] `POST /chat` - natural language flight search
@@ -349,6 +349,7 @@ interface FlightProvider {
 - [x] flight_searches table created
 - [x] Docker Compose setup (dev + prod)
 - [x] Pino structured logging configured
+- [x] Global exception filter with structured errors
 - [x] Phase 1.1: Project Setup (complete)
 - [ ] Phase 1.2: Chat API Implementation (next)
 - [ ] Phase 2: AI Integration (OpenAI natural language parsing)

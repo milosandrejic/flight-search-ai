@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { PinoLogger } from 'nestjs-pino';
-import { ErrorResponse } from '../types/error-response';
+import { ErrorResponse } from 'src/common/types/error-response';
 import { randomUUID } from 'crypto';
 
 /**

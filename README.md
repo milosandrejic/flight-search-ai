@@ -1,89 +1,46 @@
-# flight-search-mcp
+# Flight Search AI Backend
 
-Intelligent flight search backend with conversational AI - Search for flights using natural language via a chat interface.
+Conversational flight search backend using NestJS + PostgreSQL + OpenAI + Duffel API.
 
-## About
+## Stack
 
-This project provides a NestJS backend that:
-- Parses natural language flight queries using OpenAI
-- Searches flights via Duffel API
-- Maintains conversation context for refinement
-- Powers a chat-based flight search frontend
+- **NestJS** - Backend framework
+- **PostgreSQL** - Database (TypeORM)
+- **OpenAI** - Natural language parsing
+- **Duffel API** - Flight search
+- **Pino** - Structured logging
 
-## Quick Start with Docker
+## Quick Start
 
-### Development (local code + containerized database)
 ```bash
-# Start PostgreSQL only
+# Start database
 docker-compose -f docker-compose.dev.yml up -d
 
-# Copy environment file
+# Setup
 cp .env.example .env
-
-# Install dependencies
 npm install
-
-# Run migrations
 npm run migration:run
 
-# Start development server
+# Run
 npm run start:dev
 ```
 
-### Production (full stack in containers)
-```bash
-# Copy environment file and add API keys
-cp .env.example .env
+## Scripts
 
-# Build and start all services
+- `npm run start:dev` - Development server
+- `npm run build` - Production build
+- `npm run migration:run` - Apply migrations
+- `npm run migration:create` - New migration
+- `npm run lint:fix` - Fix linting
+
+## Production
+
+```bash
 docker-compose up -d
-
-# View logs
-docker-compose logs -f app
-
-# Stop services
-docker-compose down
 ```
-
-## Local Development (without Docker)
-
-### Prerequisites
-- Node.js 20+
-- PostgreSQL 16+
-
-### Setup
-```bash
-# Install dependencies
-npm install
-
-# Create database
-createdb flight_search_mcp
-
-# Configure environment
-cp .env.example .env
-# Edit .env with your database credentials and API keys
-
-# Run migrations
-npm run migration:run
-
-# Start development server
-npm run start:dev
-```
-
-## Available Scripts
-
-- `npm run start:dev` - Start development server with watch mode
-- `npm run build` - Build for production
-- `npm run start:prod` - Start production server
-- `npm run lint` - Check code style
-- `npm run lint:fix` - Fix code style issues
-- `npm run migration:run` - Apply database migrations
-- `npm run migration:revert` - Rollback last migration
-- `npm run migration:create` - Create new migration
 
 ## References
 
-- [Model Context Protocol Documentation](https://modelcontextprotocol.io/)
-- [Project Roadmap](./ROADMAP.md)
-- [AI Agent Instructions](./.github/copilot-instructions.md)
-- [Database Migrations Guide](./MIGRATIONS.md)
+- [ROADMAP.md](./ROADMAP.md) - Feature roadmap
+- [MIGRATIONS.md](./MIGRATIONS.md) - Database migrations
+- [.github/copilot-instructions.md](./.github/copilot-instructions.md) - AI guidelines

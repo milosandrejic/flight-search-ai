@@ -2,8 +2,12 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from 'nestjs-pino';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { AppController } from 'src/app.controller';
+import { AppService } from 'src/app.service';
+import { ChatController } from 'src/controllers/chat.controller';
+import { SearchHistoryController } from 'src/controllers/search-history.controller';
+import { SearchHistoryRepository } from 'src/repositories/search-history.repository';
+import { SearchHistory } from 'src/models/search-history.entity';
 
 @Module({
   imports: [
@@ -59,8 +63,9 @@ import { AppService } from './app.service';
         logging: configService.get('NODE_ENV') === 'development',
       }),
     }),
+    TypeOrmModule.forFeature([SearchHistory]),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, ChatController, SearchHistoryController],
+  providers: [AppService, SearchHistoryRepository],
 })
 export class AppModule {}
